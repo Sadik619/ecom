@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Management</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>
+        {% if customer %}
+            Edit Customer
+        {% else %}
+            Add Customer
+        {% endif %}
+    </h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Name</label>
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter customer name"
+            value="{{ customer.name|default:'' }}"
+            required
+        >
+
+        <label>Email</label>
+        <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value="{{ customer.email|default:'' }}"
+            required
+        >
+
+        <label>Phone Number</label>
+        <input
+            type="text"
+            name="phone_number"
+            placeholder="Enter phone number"
+            value="{{ customer.phone_number|default:'' }}"
+            required
+        >
+
+        <label>Address</label>
+        <textarea
+            name="address"
+            placeholder="Enter address"
+            rows="3"
+            required
+        >{{ customer.address|default:'' }}</textarea>
+
+        <button type="submit">
+            {% if customer %}
+                Update Customer
+            {% else %}
+                Save Customer
+            {% endif %}
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

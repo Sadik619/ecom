@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Management</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 450px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>
+        {% if product %}
+            Edit Product
+        {% else %}
+            Add Product
+        {% endif %}
+    </h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Name</label>
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter Product name"
+            value="{{ product.name|default:'' }}"
+            required
+        >
+
+        <label>Product</label>
+        <input
+            type="description"
+            name="description"
+            placeholder="Enter description"
+            value="{{ product.description|default:'' }}"
+            required
+        >
+
+        <label>Price</label>
+        <input
+            type="text"
+            name="price"
+            placeholder="Enter price"
+            value="{{ product.price|default:'' }}"
+            required
+        >
+
+        <label>Stock</label>
+        <textarea
+            name="stock"
+            placeholder="Enter stock"
+            rows="3"
+            required
+        >{{ product.stock|default:'' }}</textarea>
+
+        <button type="submit">
+            {% if customer %}
+                Update Product
+            {% else %}
+                Save Product
+            {% endif %}
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
